@@ -10,10 +10,16 @@ import subprocess
 import re
 
 SUPPORTED_SHELLS = ('bash', 'zsh')
+PASSWD = '/etc/passwd'
 
 
 def get_shell():
-    return os.path.basename(os.getenv('SHELL', ''))
+    user = os.getenv('USER')
+    with open(PASSWD, 'r') as passwd:
+        for line in passwd.readlines():
+            if re.match("^%s" % user, line):
+                return os.path.basename(line.split(':')[-1])
+    raise NameError("Cannot find user %s" % user)
 
 
 def mkdir(path):
