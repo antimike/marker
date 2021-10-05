@@ -18,7 +18,7 @@ def get_shell():
     with open(PASSWD, 'r') as passwd:
         for line in passwd.readlines():
             if re.match("^%s" % user, line):
-                return os.path.basename(line.split(':')[-1])
+                return os.path.basename(line.split(':')[-1].strip())
     raise NameError("Cannot find user %s" % user)
 
 
