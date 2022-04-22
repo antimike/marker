@@ -26,9 +26,9 @@ def get_os():
 def get_user_marks_path():
     return os.path.join(os.getenv('MARKER_DATA_HOME'), 'user_commands.txt')
 def get_tldr_os_marks_path():
-    return os.path.join(os.getenv('MARKER_HOME'), 'tldr', get_os()+'.txt')
+    return os.path.join(os.getenv('MARKER_DATA_HOME'), 'tldr', get_os()+'.txt')
 def get_tldr_common_marks_path():
-    return os.path.join(os.getenv('MARKER_HOME'), 'tldr', 'common.txt')
+    return os.path.join(os.getenv('MARKER_DATA_HOME'), 'tldr', 'common.txt')
 
 
 def mark_command(cmd_string, alias):
@@ -49,7 +49,7 @@ def mark_command(cmd_string, alias):
     if '##' in cmd_string or '##' in alias:
         # ## isn't allowed since it's used as seperator
         print ("command can't contain ##(it's used as command alias seperator)")
-        return        
+        return
     commands = command.load(get_user_marks_path())
     command.add(commands, command.Command(cmd_string, alias))
     command.save(commands, get_user_marks_path())
